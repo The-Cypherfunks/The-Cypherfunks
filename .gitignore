@@ -1,5 +1,5 @@
 src/*.exe
-src/
+src/Cypherfunk
 src/Cypherfunkd
 src/test_Cypherfunk
 .*.swp
