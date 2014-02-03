@@ -32,7 +32,7 @@ unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
 uint256 hashGenesisBlock("0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2");
-static CBigNum bnProofOfWorkLimit(~uint256(0) >> 10); // Cypherfunk: starting difficulty is 1 / 2^12
+static CBigNum bnProofOfWorkLimit(~uint256(0) >> 12); // Cypherfunk: starting difficulty is 1 / 2^12
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 uint256 nBestChainWork = 0;
@@ -1171,7 +1171,7 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
 	
     /// debug print
     //printf("Checking");
-    //printf("Difficulty Retarget - Kimoto Gravity Well\n");
+    printf("Difficulty Retarget - Kimoto Gravity Well\n");
     //printf("PastRateAdjustmentRatio = %g\n", PastRateAdjustmentRatio);
     //printf("Before: %08x  %s\n", BlockLastSolved->nBits, CBigNum().SetCompact(BlockLastSolved->nBits).getuint256().ToString().c_str());
     //printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
@@ -1183,7 +1183,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 {
 	static const int64	BlocksTargetSpacing			= 2 * 60; // 2 minutes
 	unsigned int		TimeDaySeconds				= 60 * 60 * 24; // 86 400
-	int64				PastSecondsMin				= TimeDaySeconds * 0.208; //from +-30min back.
+	int64				PastSecondsMin				= TimeDaySeconds * 0.0208; //from +-30min back.
 	int64				PastSecondsMax				= TimeDaySeconds * 1; //to 1 day.
 	uint64				PastBlocksMin				= PastSecondsMin / BlocksTargetSpacing; //+-15 blocks.
 	uint64				PastBlocksMax				= PastSecondsMax / BlocksTargetSpacing;	//+- 43 200 blocks. 
