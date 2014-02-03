@@ -1064,23 +1064,26 @@ uint256 static GetOrphanRoot(const CBlockHeader* pblock)
 int64 static GetBlockValue(int nHeight, int64 nFees)
 {
 	// default subsidy (year 5 onwards)
-    int64 nSubsidy = 10000 * COIN;
+    int64 nSubsidy = 5000 * COIN;
 
-	if(nHeight < 262800) //year 1
-	{
-		nSubsidy = 200000 * COIN;
+	if(nHeight < 15) {
+		nSubsidy = 5000 * COIN; //small reward while waiting for initial diff to settle.
 	}
-	else if(nHeight < 262800*2) //year 2
+	else if(nHeight < 262800) //year 1
 	{
 		nSubsidy = 100000 * COIN;
 	}
-	else if(nHeight < 262800*3) //year 3
+	else if(nHeight < 262800*2) //year 2
 	{
 		nSubsidy = 50000 * COIN;
 	}
+	else if(nHeight < 262800*3) //year 3
+	{
+		nSubsidy = 12500 * COIN;
+	}
 	else if(nHeight < 262800*4) //year 4
 	{
-		nSubsidy = 25000 * COIN;
+		nSubsidy = 6250 * COIN;
 	}
 
     return nSubsidy + nFees;
@@ -1167,11 +1170,11 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
     if (bnNew > bnProofOfWorkLimit) { bnNew = bnProofOfWorkLimit; }
 	
     /// debug print
-    printf("Checking");
-    printf("Difficulty Retarget - Kimoto Gravity Well\n");
-    printf("PastRateAdjustmentRatio = %g\n", PastRateAdjustmentRatio);
-    printf("Before: %08x  %s\n", BlockLastSolved->nBits, CBigNum().SetCompact(BlockLastSolved->nBits).getuint256().ToString().c_str());
-    printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
+    //printf("Checking");
+    //printf("Difficulty Retarget - Kimoto Gravity Well\n");
+    //printf("PastRateAdjustmentRatio = %g\n", PastRateAdjustmentRatio);
+    //printf("Before: %08x  %s\n", BlockLastSolved->nBits, CBigNum().SetCompact(BlockLastSolved->nBits).getuint256().ToString().c_str());
+    //printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
 	
 	return bnNew.GetCompact();
 }
@@ -1179,11 +1182,11 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
 unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
 	static const int64	BlocksTargetSpacing			= 2 * 60; // 2 minutes
-	unsigned int		TimeDaySeconds				= 60 * 60 * 24;
-	int64				PastSecondsMin				= TimeDaySeconds * 0.25;
-	int64				PastSecondsMax				= TimeDaySeconds * 7;
-	uint64				PastBlocksMin				= PastSecondsMin / BlocksTargetSpacing;
-	uint64				PastBlocksMax				= PastSecondsMax / BlocksTargetSpacing;	
+	unsigned int		TimeDaySeconds				= 60 * 60 * 24; // 86 400
+	int64				PastSecondsMin				= TimeDaySeconds * 0.208; //from +-30min back.
+	int64				PastSecondsMax				= TimeDaySeconds * 1; //to 1 day.
+	uint64				PastBlocksMin				= PastSecondsMin / BlocksTargetSpacing; //+-15 blocks.
+	uint64				PastBlocksMax				= PastSecondsMax / BlocksTargetSpacing;	//+- 43 200 blocks. 
 	
 	return KimotoGravityWell(pindexLast, pblock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax);
 }
@@ -2742,7 +2745,7 @@ bool LoadBlockIndex()
         pchMessageStart[1] = 0xc1;
         pchMessageStart[2] = 0xb7;
         pchMessageStart[3] = 0xdc;
-        hashGenesisBlock = uint256("0xa568177772ec92024abab0331d3498235221bda6035d20a1aaf517c7b493769a");
+        hashGenesisBlock = uint256("0x8df954a2fb59f22bbd56f224b7435de8bae451ff0b39187608a897c144fd3443");
     }
 
     //
@@ -2788,14 +2791,15 @@ bool InitBlockIndex() {
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
         block.nTime    = 1391348399;
-        block.nBits    = 0x1e0ffff0;
-        // block.nBits 	= 0x1d00ffff;
+        // block.nBits    = 0x1e0ffff0; //litecoin
+        // block.nBits 	= 0x1d00ffff; //1
+        block.nBits 	= 0x1e4ee695; //genesis block PoW = mac cpu + aws micro
         block.nNonce   = 0;
 
         if (fTestNet)
         {
             block.nTime    = 1391422556;
-            block.nNonce   = 284138;
+            block.nNonce   = 667914;
         }
 
         //// debug print
@@ -2806,7 +2810,7 @@ bool InitBlockIndex() {
         assert(block.hashMerkleRoot == uint256("0xc67c9c597801b58a991080cf324e54ec67d572a397b0151c790851db9be2a412"));
         
         // If genesis block hash does not match, then generate new genesis hash.
-        if (false && block.GetHash() != hashGenesisBlock)
+        if (true && block.GetHash() != hashGenesisBlock)
         {
             printf("Searching for genesis block...\n");
             // This will figure out a valid hash and Nonce if you're
