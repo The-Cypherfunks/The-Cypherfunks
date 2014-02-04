@@ -32,7 +32,8 @@ unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
 uint256 hashGenesisBlock("0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2");
-static CBigNum bnProofOfWorkLimit(~uint256(0) >> 12); // Cypherfunk: starting difficulty is 1 / 2^12
+static CBigNum bnProofOfWorkLimit(~uint256(0) >> 18); // Cypherfunk: starting difficulty just lower of 1 mac CPU.
+// diff of 0.00007045
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
 uint256 nBestChainWork = 0;
@@ -1171,7 +1172,7 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
 	
     /// debug print
     //printf("Checking");
-    printf("Difficulty Retarget - Kimoto Gravity Well\n");
+    //printf("Difficulty Retarget - Kimoto Gravity Well\n");
     //printf("PastRateAdjustmentRatio = %g\n", PastRateAdjustmentRatio);
     //printf("Before: %08x  %s\n", BlockLastSolved->nBits, CBigNum().SetCompact(BlockLastSolved->nBits).getuint256().ToString().c_str());
     //printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
@@ -1185,7 +1186,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 	unsigned int		TimeDaySeconds				= 60 * 60 * 24; // 86 400
 	int64				PastSecondsMin				= TimeDaySeconds * 0.0208; //from +-30min back.
 	int64				PastSecondsMax				= TimeDaySeconds * 1; //to 1 day.
-	uint64				PastBlocksMin				= PastSecondsMin / BlocksTargetSpacing; //+-15 blocks.
+	uint64				PastBlocksMin				= PastSecondsMin / BlocksTargetSpacing; //+- 15 blocks.
 	uint64				PastBlocksMax				= PastSecondsMax / BlocksTargetSpacing;	//+- 43 200 blocks. 
 	
 	return KimotoGravityWell(pindexLast, pblock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax);
@@ -2745,7 +2746,7 @@ bool LoadBlockIndex()
         pchMessageStart[1] = 0xc1;
         pchMessageStart[2] = 0xb7;
         pchMessageStart[3] = 0xdc;
-        hashGenesisBlock = uint256("0x8df954a2fb59f22bbd56f224b7435de8bae451ff0b39187608a897c144fd3443");
+        hashGenesisBlock = uint256("0xc66ef517d789ace4d9243e615775d18b047084da06693f5b32bb0be6fed99558");
     }
 
     //
@@ -2792,14 +2793,14 @@ bool InitBlockIndex() {
         block.nVersion = 1;
         block.nTime    = 1391348399;
         // block.nBits    = 0x1e0ffff0; //litecoin
-        // block.nBits 	= 0x1d00ffff; //1
-        block.nBits 	= 0x1e4ee695; //genesis block PoW = mac cpu + aws micro
+        // block.nBits 	= 0x1d00ffff; //bitcoin
+        block.nBits 	= 0x1e377290; //target for mac cpu solo mining. 
         block.nNonce   = 0;
 
         if (fTestNet)
         {
             block.nTime    = 1391422556;
-            block.nNonce   = 667914;
+            block.nNonce   = 85665;
         }
 
         //// debug print
@@ -2810,7 +2811,7 @@ bool InitBlockIndex() {
         assert(block.hashMerkleRoot == uint256("0xc67c9c597801b58a991080cf324e54ec67d572a397b0151c790851db9be2a412"));
         
         // If genesis block hash does not match, then generate new genesis hash.
-        if (true && block.GetHash() != hashGenesisBlock)
+        if (false && block.GetHash() != hashGenesisBlock)
         {
             printf("Searching for genesis block...\n");
             // This will figure out a valid hash and Nonce if you're
