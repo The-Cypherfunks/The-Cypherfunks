@@ -31,7 +31,7 @@ CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
-uint256 hashGenesisBlock("0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2");
+uint256 hashGenesisBlock("0x58ee1311db97868f75f2495dbc4684d047d097915e6c0b40a6934bfe5d319f9f");
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 18); // Cypherfunk: starting difficulty just lower of 1 mac CPU.
 // diff of 0.00007045
 CBlockIndex* pindexGenesisBlock = NULL;
@@ -2791,16 +2791,16 @@ bool InitBlockIndex() {
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1391348399;
+        block.nTime    = 1391591352;
         // block.nBits    = 0x1e0ffff0; //litecoin
         // block.nBits 	= 0x1d00ffff; //bitcoin
         block.nBits 	= 0x1e377290; //target for mac cpu solo mining. 
-        block.nNonce   = 0;
+        block.nNonce   = 31291; //nonce for Genesis Block.
 
         if (fTestNet)
         {
             block.nTime    = 1391422556;
-            block.nNonce   = 85665;
+            block.nNonce   = 85665; //nonce for TestNet3 Genesis Block.
         }
 
         //// debug print
