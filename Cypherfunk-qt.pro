@@ -1,6 +1,6 @@
 TEMPLATE = app
-TARGET = dogecoin-qt
-macx:TARGET = "Dogecoin-Qt"
+TARGET = Cypherfunk-qt
+macx:TARGET = "Cypherfunk-Qt"
 VERSION = 1.5alpha
 INCLUDEPATH += src src/json src/qt
 QT += core gui network
@@ -368,7 +368,7 @@ SOURCES += src/qt/test/test_main.cpp \
 HEADERS += src/qt/test/uritests.h
 DEPENDPATH += src/qt/test
 QT += testlib
-TARGET = dogecoin-qt_test
+TARGET = Cypherfunk-qt_test
 DEFINES += BITCOIN_QT_TEST
   macx: CONFIG -= app_bundle
 }

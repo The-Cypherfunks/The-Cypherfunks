@@ -78,6 +78,13 @@ Mac OS X
 .. _`MacPorts`: http://www.macports.org/install.php
 .. _`HomeBrew`: http://mxcl.github.io/homebrew/
 
+^^ This shit never works. 
+Install ports (including qt4-mac).
+I got Dogecoin's qt.pro file (renamed to Cypherfunk-qt.pro) Then ran (exactly):
+/opt/local/bin/qmake -spec /usr/local/Qt4.8/mkspecs/macx-g++ RELEASE=1 -o Makefile Cypherfunk-qt.pro
+make
+sudo ./contrib/macdeploy/macdeployqtplus Cypherfunk-Qt.app -dmg -fancy ./contrib/macdeploy/fancy.plist -verbose 2
+(where macdeployqtplus references to Dogecoin is changed Cypherfunk-Qt
 
 Build configuration options
 ============================

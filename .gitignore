@@ -10,6 +10,7 @@ src/test_Cypherfunk
 *.o
 *.patch
 .Cypherfunk
+*.dmg
 
 # Compilation and Qt preprocessor part
 *.qm
