@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = Cypherfunk-qt
 macx:TARGET = "Cypherfunk-Qt"
-VERSION = 1.5alpha
+VERSION = 0.1
 INCLUDEPATH += src src/json src/qt
 QT += core gui network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
