@@ -54,7 +54,7 @@ static const int64 DUST_SOFT_LIMIT = 100000000; // 1 FUNK
 /** Dust Hard Limit, ignored as wallet inputs (mininput default) */
 static const int64 DUST_HARD_LIMIT = 1000000;   // 0.01 FUNK mininput
 /** No amount larger than this (in satoshi) is valid */
-static const int64 MAX_MONEY = 20000000000 * COIN; //No reasonable tx should be over 20 billion, even with inflation. 
+static const int64 MAX_MONEY = 50000000000 * COIN; //No reasonable tx should be over 50 billion, even with inflation. 
 inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONEY); }
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 100;

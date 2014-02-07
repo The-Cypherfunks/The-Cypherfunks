@@ -1229,7 +1229,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend,
                 // if sub-cent change is required, the fee must be raised to at least nMinTxFee
                 // or until nChange becomes zero
                 // NOTE: this depends on the exact behaviour of GetMinFee
-                if (nFeeRet < CTransaction::nMinTxFee && nChange > 0 && nChange < CENT)
+                if (nFeeRet < CTransaction::nMinTxFee && nChange > 0 && nChange < COIN)
                 {
                     int64 nMoveToFee = min(nChange, CTransaction::nMinTxFee - nFeeRet);
                     nChange -= nMoveToFee;
