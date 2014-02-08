@@ -1066,19 +1066,20 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
 {
 	// default subsidy (year 5 onwards)
     int64 nSubsidy = 5000 * COIN;
+	int diffSettlingPeriod = 15;
 
-	if(nHeight < 15) {
+	if(nHeight < diffSettlingPeriod) {
 		nSubsidy = 5000 * COIN; //small reward while waiting for initial diff to settle.
 	}
-	else if(nHeight < 262800) //year 1
+	else if(nHeight < (262800 + diffSettlingPeriod)) //year 1 (+262800 blocks)
 	{
 		nSubsidy = 100000 * COIN;
 	}
-	else if(nHeight < 262800*2) //year 2
+	else if(nHeight < ((262800*2) + diffSettlingPeriod)) //year 2
 	{
 		nSubsidy = 50000 * COIN;
 	}
-	else if(nHeight < 262800*3) //year 3
+	else if(nHeight < ((262800*3) + diffSettlingPeriod)) //year 3
 	{
 		nSubsidy = 25000 * COIN;
 	}
