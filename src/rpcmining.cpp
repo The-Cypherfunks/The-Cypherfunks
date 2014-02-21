@@ -56,7 +56,7 @@ Value getnetworkhashps(const Array& params, bool fHelp)
     if (fHelp || params.size() > 2)
         throw runtime_error(
             "getnetworkhashps [blocks] [height]\n"
-            "Returns the estimated network hashes per second based on the last 120 blocks.\n"
+            "Returns the estimated network hashes per second based on the last 50 blocks.\n"
             "Pass in [blocks] to override # of blocks, -1 specifies since last difficulty change.\n"
             "Pass in [height] to estimate the network speed at the time when a certain block was found.");
 
