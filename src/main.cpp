@@ -31,7 +31,7 @@ CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
-uint256 hashGenesisBlock("0xb7f46d4dcb5a71a3589811c83cf0f4bed501a6470762942518a10126b88353ca");
+uint256 hashGenesisBlock("0xcc22a327027dda63764cb25db7ab2349ad67ecb5a6bae0e1b629c9defab3bb14");
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 18); // Cypherfunk: starting difficulty just lower of 1 mac CPU.
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -2746,7 +2746,7 @@ bool LoadBlockIndex()
         pchMessageStart[1] = 0xc1;
         pchMessageStart[2] = 0xb7;
         pchMessageStart[3] = 0xdc;
-        hashGenesisBlock = uint256("0xc66ef517d789ace4d9243e615775d18b047084da06693f5b32bb0be6fed99558");
+        hashGenesisBlock = uint256("0x8da4b127dd8a5317d2165690c97ecb5947839e7cf106c1e762728e5b24cfcde4");
     }
 
     //
@@ -2779,7 +2779,7 @@ bool InitBlockIndex() {
         //   vMerkleTree: 97ddfbbae6
 
         // Genesis block
-        const char* pszTimestamp = "Currently listening to Animal Collective & Beck.";
+        const char* pszTimestamp = "Listening to Beck. BTC:00000000000000001817003c81e939f39ad62f2ae40b6ebe49a01b8608417df0";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -2791,24 +2791,23 @@ bool InitBlockIndex() {
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1392733089;
+        block.nTime    = 1392960907;
         // block.nBits    = 0x1e0ffff0; //litecoin
         // block.nBits 	= 0x1d00ffff; //bitcoin
         block.nBits 	= 0x1e377290; //target for mac cpu solo mining. 
-        block.nNonce   = 1558520; //nonce for Genesis Block.
+        block.nNonce   = 78948; //nonce for Genesis Block.
 
         if (fTestNet)
         {
-            block.nTime    = 1391422556;
-            block.nNonce   = 85665; //nonce for TestNet3 Genesis Block.
+            block.nTime    = 1392958457;
+            block.nNonce   = 647316; //nonce for TestNet3 Genesis Block.
         }
-
         //// debug print
         uint256 hash = block.GetHash();
         printf("%s\n", hash.ToString().c_str());
         printf("%s\n", hashGenesisBlock.ToString().c_str());
         printf("%s\n", block.hashMerkleRoot.ToString().c_str());
-        assert(block.hashMerkleRoot == uint256("0xc67c9c597801b58a991080cf324e54ec67d572a397b0151c790851db9be2a412"));
+        assert(block.hashMerkleRoot == uint256("0xbb56efcf2b4dcce7350b9324e6a9f37a99156488670b1d2df6f0f7f00be938ea"));
         
         // If genesis block hash does not match, then generate new genesis hash.
         if (false && block.GetHash() != hashGenesisBlock)
