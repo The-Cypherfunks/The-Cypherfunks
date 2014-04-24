@@ -2742,10 +2742,11 @@ bool LoadBlockIndex()
 {
     if (fTestNet)
     {
-        pchMessageStart[0] = 0xfc;
-        pchMessageStart[1] = 0xc1;
-        pchMessageStart[2] = 0xb7;
-        pchMessageStart[3] = 0xdc;
+        pchMessageStart_old[0] = 0xfc;
+        pchMessageStart_old[1] = 0xc1;
+        pchMessageStart_old[2] = 0xb7;
+        pchMessageStart_old[3] = 0xdc;
+        
         hashGenesisBlock = uint256("0x8da4b127dd8a5317d2165690c97ecb5947839e7cf106c1e762728e5b24cfcde4");
     }
 
@@ -2960,12 +2961,25 @@ bool LoadExternalBlockFile(FILE* fileIn, CDiskBlockPos *dbp)
             unsigned int nSize = 0;
             try {
                 // locate a header
-                unsigned char buf[4];
-                blkdat.FindByte(pchMessageStart[0]);
+                unsigned char buf_old[4];
+                blkdat.FindByte(pchMessageStart_old[0]);
                 nRewind = blkdat.GetPos()+1;
-                blkdat >> FLATDATA(buf);
-                if (memcmp(buf, pchMessageStart, 4))
-                    continue;
+                blkdat >> FLATDATA(buf_old);
+
+                //todo: eventually switch this around so new messagestart is first checked.
+                if (memcmp(buf_old, pchMessageStart_old, 4)) {
+                    continue; //if old messagestart is in the header, allow it.
+
+                    unsigned char buf_new[4];
+                    blkdat.FindByte(pchMessageStart_new[0]);
+                    nRewind = blkdat.GetPos()+1;
+                    blkdat >> FLATDATA(buf_new);
+
+                    if (memcmp(buf_new, pchMessageStart_new, 4)) {
+                        continue; //if the old messagestart is not there, check if the new one is.
+                    }
+                }
+
                 // read size
                 blkdat >> nSize;
                 if (nSize < 80 || nSize > MAX_BLOCK_SIZE)
@@ -3110,10 +3124,11 @@ bool static AlreadyHave(const CInv& inv)
 
 
 // The message start string is designed to be unlikely to occur in normal data.
-// The characters are rarely used upper ASCII, not valid as UTF-8, and produce
+// The characters are rarely used upper ASCII (>7e), not valid as UTF-8 (first byte > 0xF4), and produce
 // a large 4-byte int at any alignment.
-unsigned char pchMessageStart[4] = { 0xfb, 0xc0, 0xb6, 0xdb }; // Cypherfunk: increase each by adding 2 to bitcoin's value.
-
+unsigned char pchMessageStart_old[4] = { 0xfb, 0xc0, 0xb6, 0xdb }; // Old one: Litecoin's messagestart
+unsigned char pchMessageStart_new[4] = { 0xfc, 0xc3, 0xba, 0xe2 }; // Cypherfunk: Added 1, 3, 4, 7
+unsigned char pchMessageStart[4] = { 0xfb, 0xc0, 0xb6, 0xdb }; // Old one: Litecoin's messagestart //used in writing blocks
 
 void static ProcessGetData(CNode* pfrom)
 {
@@ -3890,10 +3905,14 @@ bool ProcessMessages(CNode* pfrom)
         it++;
 
         // Scan for message start
-        if (memcmp(msg.hdr.pchMessageStart, pchMessageStart, sizeof(pchMessageStart)) != 0) {
-            printf("\n\nPROCESSMESSAGE: INVALID MESSAGESTART\n\n");
-            fOk = false;
-            break;
+        if (memcmp(msg.hdr.pchMessageStart, pchMessageStart_old, sizeof(pchMessageStart_old)) != 0) {
+            //if it is not the old message start, check if is the new message start
+            if (memcmp(msg.hdr.pchMessageStart, pchMessageStart_new, sizeof(pchMessageStart_new)) != 0) {
+                //if is neither, throw error.
+                printf("\n\nPROCESSMESSAGE: INVALID MESSAGESTART\n\n");
+                fOk = false;
+                break;
+            }
         }
 
         // Read header
