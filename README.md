@@ -1,7 +1,7 @@
 Cypherfunk integration/staging tree
 ================================
 
-http://www.thecpyherfunks.com
+http://www.thecypherfunks.com
 
 Copyright (c) 2009-2014 Bitcoin Developers
 Copyright (c) 2011-2014 Litecoin Developers

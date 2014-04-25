@@ -95,7 +95,9 @@ extern int64 nHPSTimerStart;
 extern int64 nTimeBestReceived;
 extern CCriticalSection cs_setpwalletRegistered;
 extern std::set<CWallet*> setpwalletRegistered;
-extern unsigned char pchMessageStart[4];
+extern unsigned char pchMessageStart_old[4];
+extern unsigned char pchMessageStart_new[4];
+extern unsigned char pchMessageStart[4]; //current one. used in writing blocks. db.cpp
 extern bool fImporting;
 extern bool fReindex;
 extern bool fBenchmark;
