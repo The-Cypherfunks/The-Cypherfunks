@@ -1,47 +1,80 @@
-Cypherfunk 0.8.x BETA
-====================
-
-Copyright (c) 2009-2013 Bitcoin Developers
-Copyright (c) 2011-2013 Cypherfunk Developers
-
-Distributed under the MIT/X11 software license, see the accompanying
-file COPYING or http://www.opensource.org/licenses/mit-license.php.
-This product includes software developed by the OpenSSL Project for use in the [OpenSSL Toolkit](http://www.openssl.org/). This product includes
-cryptographic software written by Eric Young ([eay@cryptsoft.com](mailto:eay@cryptsoft.com)), and UPnP software written by Thomas Bernard.
-
-
-Intro
----------------------
-Cypherfunk is a free open source peer-to-peer electronic cash system that is
-completely decentralized, without the need for a central server or trusted
-parties.  Users hold the crypto keys to their own money and transact directly
-with each other, with the help of a P2P network to check for double-spending.
-
+Cypherfunk Core
+=============
 
 Setup
 ---------------------
-You need the Qt4 run-time libraries to run Cypherfunk-Qt. On Debian or Ubuntu:
-	`sudo apt-get install libqtgui4`
+Cypherfunk Core is the original Cypherfunk client and it builds the backbone of the network. It downloads and, by default, stores the entire history of Cypherfunk transactions (which is currently more than 7 GBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
+
+To download Cypherfunk Core, visit [cypherfunk.org](https://cypherfunk.org).
+
+Running
+---------------------
+The following are some helpful notes on how to run Cypherfunk on your native platform.
+
+### Unix
 
 Unpack the files into a directory and run:
 
-- bin/32/Cypherfunk-qt (GUI, 32-bit)
-- bin/32/Cypherfunkd (headless, 32-bit)
-- bin/64/Cypherfunk-qt (GUI, 64-bit)
-- bin/64/Cypherfunkd (headless, 64-bit)
+- `bin/cypherfunk-qt` (GUI) or
+- `bin/cypherfunkd` (headless)
 
-See the documentation at the [Cypherfunk Wiki](http://Cypherfunk.info)
+### Windows
+
+Unpack the files into a directory, and then run cypherfunk-qt.exe.
+
+### OS X
+
+Drag Cypherfunk-Core to your applications folder, and then run Cypherfunk-Core.
+
+### Need Help?
+
+* See the documentation at the [Cypherfunk Wiki](https://cypherfunk.info/)
 for help and more information.
+* Ask for help on [#cypherfunk](http://webchat.freenode.net?channels=cypherfunk) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net?channels=cypherfunk).
+* Ask for help on the [CypherfunkTalk](https://cypherfunktalk.io/) forums.
 
-
-Other Pages
+Building
 ---------------------
+The following are developer notes on how to build Cypherfunk on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+
+- [OS X Build Notes](build-osx.md)
 - [Unix Build Notes](build-unix.md)
-- [OSX Build Notes](build-osx.md)
-- [Windows Build Notes](build-msw.md)
-- [Coding Guidelines](coding.md)
-- [Release Process](release-process.md)
+- [Windows Build Notes](build-windows.md)
+- [OpenBSD Build Notes](build-openbsd.md)
+- [Gitian Building Guide](gitian-building.md)
+
+Development
+---------------------
+The Cypherfunk repo's [root README](/README.md) contains relevant information on the development process and automated testing.
+
+- [Developer Notes](developer-notes.md)
 - [Release Notes](release-notes.md)
-- [Multiwallet Qt Development](multiwallet-qt.md)
-- [Unit Tests](unit-tests.md)
+- [Release Process](release-process.md)
+- [Source Code Documentation (External Link)](https://dev.visucore.com/cypherfunk/doxygen/)
 - [Translation Process](translation_process.md)
+- [Translation Strings Policy](translation_strings_policy.md)
+- [Travis CI](travis-ci.md)
+- [Unauthenticated REST Interface](REST-interface.md)
+- [Shared Libraries](shared-libraries.md)
+- [BIPS](bips.md)
+- [Dnsseed Policy](dnsseed-policy.md)
+- [Benchmarking](benchmarking.md)
+
+### Resources
+* Discuss on the [CypherfunkTalk](https://cypherfunktalk.io/) forums.
+* Discuss general Cypherfunk development on #cypherfunk-dev on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net/?channels=cypherfunk-dev).
+
+### Miscellaneous
+- [Assets Attribution](assets-attribution.md)
+- [Files](files.md)
+- [Fuzz-testing](fuzzing.md)
+- [Reduce Traffic](reduce-traffic.md)
+- [Tor Support](tor.md)
+- [Init Scripts (systemd/upstart/openrc)](init.md)
+- [ZMQ](zmq.md)
+
+License
+---------------------
+Distributed under the [MIT software license](/COPYING).
+This product includes software developed by the OpenSSL Project for use in the [OpenSSL Toolkit](https://www.openssl.org/). This product includes
+cryptographic software written by Eric Young ([eay@cryptsoft.com](mailto:eay@cryptsoft.com)), and UPnP software written by Thomas Bernard.
