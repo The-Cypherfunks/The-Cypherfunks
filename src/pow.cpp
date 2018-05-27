@@ -135,13 +135,9 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
 	uint64_t				PastBlocksMin				= PastSecondsMin / BlocksTargetSpacing; //+- 15 blocks.
 	uint64_t				PastBlocksMax				= PastSecondsMax / BlocksTargetSpacing;	//+- 43 200 blocks. 
 	
-	return KimotoGravityWell(pindexLast, pblock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax, params);
-	
-	if(pindexLast->nHeight+1 < params.nSwitchDGW)
-    {
+	if(pindexLast->nHeight+1 < params.nSwitchDGW) {
 		return KimotoGravityWell(pindexLast, pblock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax, params);
-    }
-    else {
+    } else {
     	return DarkGravityWave(pindexLast, pblock, params);
     }
 }
