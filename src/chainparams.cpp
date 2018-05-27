@@ -82,7 +82,7 @@ public:
         consensus.BIP66Height = 926795; // expected: May 20 2018
                 
         //Hard fork param
-        consensus.nSwitchDGW = 926795; // expected: May 20 2018
+        consensus.nSwitchDGW = 942088; // expected: June 11 2018
         
         consensus.powLimit = uint256S("00003fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); 
         consensus.nPowTargetTimespan = 60 * 60 * 4; // 4h
