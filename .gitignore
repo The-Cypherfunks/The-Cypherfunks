@@ -14,12 +14,10 @@ src/test_Cypherfunk
 
 # Compilation and Qt preprocessor part
 *.qm
-Makefile
 Cypherfunk-qt
 Cypherfunk-Qt.app
 
 # Unit-tests
-Makefile.test
 Cypherfunk-qt_test
 
 # Resources cpp
@@ -32,5 +30,4 @@ qrc_*.cpp
 .DS_Store
 build
 
-!src/leveldb*/Makefile
 *.zip
